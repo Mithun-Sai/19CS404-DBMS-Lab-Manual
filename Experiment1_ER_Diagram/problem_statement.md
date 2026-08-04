@@ -22,7 +22,6 @@ FlexiFit Gym wants a database to manage its members, trainers, and fitness progr
 - Payments tracked for memberships and sessions.
 
 ### ER Diagram:
-*Paste or attach your diagram here*  
 <img width="1332" height="817" alt="seniero_1 drawio" src="https://github.com/user-attachments/assets/42bc280f-acb4-4a10-8c9f-05017570cecd" />
 
 ### Entities and Attributes
@@ -69,7 +68,6 @@ The Central Library wants to manage book lending and cultural events.
 - Overdue fines apply for late returns.
 
 ### ER Diagram:
-*Paste or attach your diagram here*  
 <img width="1032" height="842" alt="Senieor_2 drawio" src="https://github.com/user-attachments/assets/c636fa42-5968-43b5-8b2f-88f661de7907" />
 
 ### Entities and Attributes
@@ -117,31 +115,39 @@ A popular restaurant wants to manage reservations, orders, and billing.
 - Waiters assigned to serve reservations.
 
 ### ER Diagram:
-*Paste or attach your diagram here*  
-![ER Diagram](er_diagram_restaurant.png)
+<img width="1072" height="892" alt="seniero_3 drawio" src="https://github.com/user-attachments/assets/a3c6ed25-e6e9-4221-b438-a432ac197863" />
 
 ### Entities and Attributes
 
-| Entity | Attributes (PK, FK) | Notes |
-|--------|--------------------|-------|
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
+
+| Entity          | Attributes (PK, FK)                                                           | Notes                                         |
+| --------------- | ----------------------------------------------------------------------------- | --------------------------------------------- |
+| **Customer**    | **customer_id (PK)**, name, phone                                             | Stores customer details.                      |
+| **Table**       | **table_id (PK)**, capacity                                                   | Stores restaurant table information.          |
+| **Reservation** | **reservation_id (PK)**, reservation_date, reservation_time, number_of_guests | Stores reservation details.                   |
+| **Order**       | **order_id (PK)**, order_time                                                 | Stores food orders placed for a reservation.  |
+| **Dish**        | **dish_id (PK)**, dish_name, category, price                                  | Stores menu item details.                     |
+| **Bill**        | **bill_id (PK)**, food_charge, service_charge, total_amount                   | Stores billing information for a reservation. |
+| **Waiter**      | **waiter_id (PK)**, waiter_name                                               | Stores waiter details.                        |
+
 
 ### Relationships and Constraints
 
-| Relationship | Cardinality | Participation | Notes |
-|--------------|------------|---------------|-------|
-|              |            |               |       |
-|              |            |               |       |
-|              |            |               |       |
+| Relationship                       | Cardinality | Participation | Notes                                                                                         |
+| ---------------------------------- | ----------- | ------------- | --------------------------------------------------------------------------------------------- |
+| Customer **MAKES** Reservation     | 1 : M       | Partial       | A customer can make multiple reservations, but each reservation belongs to one customer.      |
+| Table **RESERVED FOR** Reservation | 1 : M       | Partial       | A table can be reserved many times at different times, but each reservation is for one table. |
+| Reservation **HAS** Order          | 1 : M       | Partial       | A reservation may have multiple food orders, and each order belongs to one reservation.       |
+| Order **CONTAINS** Dish            | M : N       | Total         | An order contains multiple dishes, and a dish can appear in multiple orders.                  |
+| Reservation **GENERATES** Bill     | 1 : 1       | Total         | Each reservation generates one bill, and each bill belongs to one reservation.                |
+| Waiter **SERVES** Reservation      | 1 : M       | Partial       | A waiter can serve multiple reservations, while each reservation is served by one waiter.     |
+
 
 ### Assumptions
-- 
-- 
-- 
+- Walk-in customers are also recorded as customers before placing orders.
+- Each reservation is assigned to one table and generates one final bill.
+- A dish can appear in multiple orders, and an order can contain multiple dishes.
+
 
 ---
 
